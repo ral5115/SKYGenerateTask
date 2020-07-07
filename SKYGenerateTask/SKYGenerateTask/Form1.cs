@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpreadsheetLight;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,15 +21,26 @@ namespace SKYGenerateTask
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string filePath = @"C:\Users\Public\Documents\TU COMPRA JUNIO 19 2020.xls";
-            try
+            string filePath = @"C:\Users\Public\Documents\prueba2.xlsx";
+             try
             {
-                
+                SLDocument s1 = new SLDocument(filePath);
+
+           
+                int idRow = 1;
+                while (!string.IsNullOrEmpty(s1.GetCellValueAsString(idRow, 1)))
+                {
+                    var a = s1.GetCellValueAsString(idRow, 1);
+                    var b = s1.GetCellValueAsString(idRow, 2);
+                    var c = s1.GetCellValueAsString(idRow, 3);
+                    idRow++;
+                }
+                    
             }
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
            
         }
