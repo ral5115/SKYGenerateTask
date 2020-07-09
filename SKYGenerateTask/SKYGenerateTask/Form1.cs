@@ -23,6 +23,10 @@ namespace SKYGenerateTask
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            SQLTransaction ejecutar = new SQLTransaction();
+            DataSet structure = new DataSet();
+            PlaneBuilder planeBuild = new PlaneBuilder();
+
             string filePath = @"C:\Users\Public\Documents\prueba.xlsx";
              try
             {
@@ -49,6 +53,8 @@ namespace SKYGenerateTask
 
                 string jsonDocto = JsonConvert.SerializeObject(json);
                 jsonDocto = @"[{""Conector"": ""Docto_Contable"", ""Movto_Contable"":" + jsonDocto+"}]";
+
+                structure = ejecutar.GetStruct();
 
 
             }
