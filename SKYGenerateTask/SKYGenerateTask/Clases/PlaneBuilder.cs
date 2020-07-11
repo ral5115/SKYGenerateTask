@@ -18,7 +18,7 @@ namespace SKYGenerateTask.Clases
 
             try
             {
-                plane = new StringBuilder("<Linea>000000100000001");
+                plane = new StringBuilder("000000100000001");
                 DataRow[] structureDetail = structure.Tables[1].Select("desc_seccion = 'Inicial'");//consulta estructura de linea inicial
 
                 //valida su se esta enviando variable o fija la compañia
@@ -38,7 +38,6 @@ namespace SKYGenerateTask.Clases
 
                 throw;
             }
-            plane.Append("</Linea>");
             return plane.ToString();
         }
 
@@ -52,7 +51,7 @@ namespace SKYGenerateTask.Clases
                 DataRow[] structureDetail = structure.Tables[1].Select("desc_seccion = '" + json["Conector"].ToString() + "'");//extrae estructura del encabezado o maestro
                 plane.AppendLine();
                 consectLine++;
-                plane.Append("<Linea>" + (consectLine).ToString().PadLeft(7, '0'));//genera consecutivo de linea
+                plane.Append( (consectLine).ToString().PadLeft(7, '0'));//genera consecutivo de linea
 
                 for (int i = 1; i < structureDetail.Length; i++)//recorre la estructura armando la linea
                 {
@@ -133,7 +132,6 @@ namespace SKYGenerateTask.Clases
             {
                 throw e;
             }
-            plane.Append("</Linea>");
             return plane.ToString();
         }
 
@@ -157,7 +155,7 @@ namespace SKYGenerateTask.Clases
                         {
                             plane.AppendLine();
                             consectLine++;
-                            plane.Append("<Linea>" + (consectLine).ToString().PadLeft(7, '0'));//asigna consecutivo de linea
+                            plane.Append((consectLine).ToString().PadLeft(7, '0'));//asigna consecutivo de linea
 
                             for (int i = 1; i < structureDetail.Length; i++)//recorre estructura del detalle armando la linea
                             {
@@ -232,7 +230,7 @@ namespace SKYGenerateTask.Clases
                                 }
                                 var resultado = plane.ToString();
                             }
-                            plane.Append("</Linea>");
+                            
                         }
                     }
 
@@ -258,7 +256,7 @@ namespace SKYGenerateTask.Clases
                 DataRow[] structureDetail = structure.Tables[1].Select("desc_seccion = 'Final'");
                 plane.AppendLine();
                 consectLine++;
-                plane.Append("<Linea>" + (consectLine).ToString().PadLeft(7, '0'));
+                plane.Append((consectLine).ToString().PadLeft(7, '0'));
 
                 for (int i = 0; i < structureDetail.Length; i++)
                 {
@@ -272,7 +270,7 @@ namespace SKYGenerateTask.Clases
 
                     }
                 }
-                plane.Append("</Linea>");
+                
 
             }
             catch (Exception)
@@ -284,47 +282,6 @@ namespace SKYGenerateTask.Clases
             return plane.ToString();
         }
 
-        //public string SendInformationWS(string xml)
-        //{
-        //    try
-        //    {
-        //        string xmlSend;
-        //        wsSIESA.WSUNOEESoap ws = new wsSIESA.WSUNOEESoapClient(wsSIESA.WSUNOEESoapClient.EndpointConfiguration.WSUNOEESoap);
-        //        wsSIESA.ImportarXMLRequest request = new wsSIESA.ImportarXMLRequest();
-
-
-        //        xmlSend = "<Importar>";
-        //        xmlSend += "<NombreConexion>unoee</NombreConexion>";
-        //        xmlSend += "<IdCia>1</IdCia>";
-        //        xmlSend += "<Usuario>auxcontable</Usuario>";
-        //        xmlSend += "<Clave>1234</Clave>";
-        //        xmlSend += "<Datos>";
-        //        xmlSend += xml;
-        //        xmlSend += "</Datos>";
-        //        xmlSend += "</Importar>";
-
-        //        request.printTipoError = 0;
-        //        request.pvstrDatos = xmlSend;
-        //        var result = ws.ImportarXMLAsync(request).Result;
-        //        if (result.printTipoError == 0)
-        //        {
-        //            return "Importacion Exitosa";
-        //        }
-        //        else
-        //        {
-        //            return result.ImportarXMLResult.Nodes[1].ToString();
-        //        }
-
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return ex.Message;
-        //    }
-
-
-
-        //}
+        
     }
 }
