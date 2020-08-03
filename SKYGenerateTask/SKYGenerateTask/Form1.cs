@@ -28,12 +28,16 @@ namespace SKYGenerateTask
             DataSet structure = new DataSet();
             PlaneBuilder planeBuild = new PlaneBuilder();
 
-            string filePath = @"C:\INTERFAZ TU COMPRA\Excel de cargue";//RUTA DONDE VA A LEER EXCEL
+            string filePath = @"C:\Interfaz_tu_compra\Excel_de_carque";//RUTA DONDE VA A LEER EXCEL
             try
             {
+                //MessageBox.Show("inicio proceso");
+
                 DirectoryInfo di = new DirectoryInfo(filePath);
                 foreach (var fi in di.GetFiles("*.xlsx"))
                 {
+                    //MessageBox.Show("leyo archivo");
+
                     var file = filePath + @"\" + fi.Name;                                       
                     SLDocument s1 = new SLDocument(file);
                     int idRow = 2;
@@ -79,6 +83,9 @@ namespace SKYGenerateTask
                         jsonExcel.Add(reg);
                         idRow++;
                     }
+
+                    
+
                     string fecha = DateTime.Now.ToString("yyyyMMdd");
                     fecha = @"""" + fecha + @"""";//COMILLA DOBLE EN FECHA
                     string jsonDocto = JsonConvert.SerializeObject(jsonExcel);//CONVERSION OBJETO EN JSON
@@ -93,6 +100,8 @@ namespace SKYGenerateTask
                     JObject jsonValue = JObject.Parse(jsonDocto);
                     List<JObject> value = new List<JObject>();
                     value.Add(jsonValue);
+
+                    //MessageBox.Show("armo json");
 
                     if (value != null)//ARMA EL PLANO CON BASE EN EL JSON Y LA ESTRUCTURA
                     {
@@ -113,14 +122,19 @@ namespace SKYGenerateTask
 
                         plane.Append(planeBuild.BuildFinal(structure, value[0], ref consectLine));//construye linea final
 
+                        //MessageBox.Show("armo plano");
 
                         string Plano = plane.ToString();
-                        var SavePlane = new StreamWriter($@"C:\Txt\Unoee\{fi.Name}.txt");
+                        var SavePlane = new StreamWriter($@"C:\Interfaz_tu_compra\Txt_unoee\{fi.Name}.txt");
                         SavePlane.WriteLine(Plano);
                         SavePlane.Close();
 
-                        fi.MoveTo($@"C:\INTERFAZ TU COMPRA\Excel de cargue\procesados\{fi.Name}");
-                        
+                        //MessageBox.Show("guardo plano");
+
+                        fi.MoveTo($@"C:\Interfaz_tu_compra\Excel_de_carque\procesados\{fi.Name}");
+
+                        //MessageBox.Show("movio plano");
+
                     }
                 }
 
@@ -128,7 +142,7 @@ namespace SKYGenerateTask
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
                 throw ex;
             }
             finally
